@@ -28,3 +28,31 @@ Method -> POST, URL -> /api/auth/login, Time -> 2026-05-21T08:47:30.768Z
 Method -> PATCH, URL -> /api/issues/1, Time -> 2026-05-21T08:51:06.414Z
 
 Method -> PATCH, URL -> /api/issues/1, Time -> 2026-05-21T08:52:38.500Z
+
+Method -> POST, URL -> /api/auth/signup, Time -> 2026-05-21T10:22:42.347Z
+
+Method -> POST, URL -> /api/auth/signup, Time -> 2026-05-21T10:23:30.838Z
+
+Method -> POST, URL -> /api/auth/signup, Time -> 2026-05-21T10:23:44.284Z
+
+Method -> POST, URL -> /api/auth/signup, Time -> 2026-05-21T10:23:54.347Z
+
+Method -> POST, URL -> /api/auth/signup, Time -> 2026-05-21T10:24:19.192Z
+
+Method -> POST, URL -> /api/auth/signup, Time -> 2026-05-21T10:24:30.203Z
+
+Method -> POST, URL -> /api/auth/signup, Time -> 2026-05-21T10:24:39.401Z
+
+Method -> POST, URL -> /api/auth/signup, Time -> 2026-05-21T10:27:42.992Z
+
+Method -> POST, URL -> /api/auth/signup, Time -> 2026-05-21T10:28:09.042Z
+
+Method -> POST, URL -> /api/auth/signup, Time -> 2026-05-21T10:28:27.609Z
+
+Method -> POST, URL -> /api/auth/signup, Time -> 2026-05-21T10:28:37.329Z
+
+Method -> POST, URL -> /api/auth/signup, Time -> 2026-05-21T10:29:51.258Z
+
+Method -> POST, URL -> /api/auth/signup, Time -> 2026-05-21T10:30:13.114Z
+
+Method -> POST, URL -> /api/auth/login, Time -> 2026-05-21T10:33:41.918Z

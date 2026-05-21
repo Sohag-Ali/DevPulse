@@ -70,7 +70,6 @@ const loginUserFromDB = async (payload: { email: string, password: string }) => 
     return {
         token,
         user
-
     };
 
 
