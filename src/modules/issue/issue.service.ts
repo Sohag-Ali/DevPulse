@@ -1,4 +1,5 @@
 import { pool } from "../../db";
+import AppError from "../../utils/AppError";
 import type { IIssue, TQuery, TUpdateIssue, TUser } from "./issue.interface";
 
 
@@ -82,7 +83,7 @@ const getSingleIssueFromDB = async (id: string) => {
     const issue = issueResult.rows[0];
 
     if (!issue) {
-        throw new Error("Issue not found");
+        throw new AppError(404, "Issue not found");
     }
 
     const reporterResult = await pool.query(
@@ -128,16 +129,16 @@ const updateIssueInDB = async (
     const existingIssue = existingIssueResult.rows[0];
 
     if (!existingIssue) {
-        throw new Error("Issue not found");
+        throw new AppError(404, "Issue not found");
     }
 
     if(user.role === "contributor"){
         if(existingIssue.reporter_id !== user.id){
-            throw new Error("You are not authorized to update this issue");
+            throw new AppError(403, "You are not authorized to update this issue");
         }
 
         if(existingIssue.status !== "open"){
-            throw new Error("You can only update issues that are open");
+            throw new AppError(400, "Only open issues can be updated");
         }
     }
 
@@ -163,7 +164,7 @@ const updateIssueInDB = async (
 const deleteIssueFromDB = async (id: string, user: TUser) => {
 
     if(user.role !== "maintainer"){
-        throw new Error("You are not authorized to delete this issue");
+        throw new AppError(403, "You are not authorized to delete this issue");
     }
 
     const result = await pool.query(

@@ -122,3 +122,39 @@ Method -> DELETE, URL -> /api/issues/3, Time -> 2026-05-21T11:50:27.648Z
 Method -> POST, URL -> /api/auth/login, Time -> 2026-05-21T11:50:43.537Z
 
 Method -> DELETE, URL -> /api/issues/3, Time -> 2026-05-21T11:51:01.307Z
+
+Method -> POST, URL -> /api/auth/signup, Time -> 2026-05-21T15:35:06.135Z
+
+Method -> POST, URL -> /api/auth/signup, Time -> 2026-05-21T15:37:00.436Z
+
+Method -> POST, URL -> /api/auth/signup, Time -> 2026-05-21T15:38:27.495Z
+
+Method -> POST, URL -> /api/auth/login, Time -> 2026-05-21T15:39:09.987Z
+
+Method -> POST, URL -> /api/auth/login, Time -> 2026-05-21T15:39:21.092Z
+
+Method -> POST, URL -> /api/auth/login, Time -> 2026-05-21T15:39:27.304Z
+
+Method -> POST, URL -> /api/auth/login, Time -> 2026-05-21T15:40:50.374Z
+
+Method -> POST, URL -> /api/auth/login, Time -> 2026-05-21T15:47:22.625Z
+
+Method -> POST, URL -> /api/issues, Time -> 2026-05-21T15:47:47.581Z
+
+Method -> POST, URL -> /api/issues, Time -> 2026-05-21T15:48:01.969Z
+
+Method -> POST, URL -> /api/issues, Time -> 2026-05-21T15:48:35.129Z
+
+Method -> POST, URL -> /api/issues, Time -> 2026-05-21T15:48:57.094Z
+
+Method -> POST, URL -> /api/issues, Time -> 2026-05-21T15:49:09.023Z
+
+Method -> POST, URL -> /api/issues, Time -> 2026-05-21T15:49:20.829Z
+
+Method -> GET, URL -> /api/issues, Time -> 2026-05-21T15:49:45.867Z
+
+Method -> GET, URL -> /api/issues/45, Time -> 2026-05-21T15:50:12.578Z
+
+Method -> GET, URL -> /api/issues/4, Time -> 2026-05-21T15:50:21.708Z
+
+Method -> GET, URL -> /api/issues/8, Time -> 2026-05-21T15:50:26.387Z

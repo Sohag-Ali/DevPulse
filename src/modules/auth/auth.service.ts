@@ -1,5 +1,6 @@
 import config from "../../config";
 import { pool } from "../../db";
+import AppError from "../../utils/AppError";
 import type { IUser } from "./auth.interface";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -16,7 +17,7 @@ const createUserIntoDB = async (payload: IUser) => {
 
 
     if (existingUser.rows.length > 0) {
-        throw new Error("User with this email already exists");
+        throw new AppError(400, "User with this email already exists");
     }
 
 
@@ -43,7 +44,7 @@ const loginUserFromDB = async (payload: { email: string, password: string }) => 
     const user = existingUser.rows[0];
 
     if (!user) {
-        throw new Error("User with this email does not exist");
+        throw new AppError(400, "User with this email does not exist");
     }
 
     // Compare passwords
@@ -51,7 +52,7 @@ const loginUserFromDB = async (payload: { email: string, password: string }) => 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-        throw new Error("Invalid password");
+        throw new AppError(400, "Invalid password");
     }
 
     // Generate JWT token
