@@ -16,3 +16,9 @@ Method -> GET, URL -> /api/issues, Time -> 2026-05-21T07:32:45.746Z
 Method -> GET, URL -> /api/issues, Time -> 2026-05-21T07:35:49.543Z
 
 Method -> GET, URL -> /api/issues, Time -> 2026-05-21T07:36:10.822Z
+
+Method -> GET, URL -> /api/issues/1, Time -> 2026-05-21T08:20:58.302Z
+
+Method -> GET, URL -> /api/issues/3, Time -> 2026-05-21T08:21:11.334Z
+
+Method -> GET, URL -> /api/issues, Time -> 2026-05-21T08:21:43.215Z

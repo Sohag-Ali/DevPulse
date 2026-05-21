@@ -69,7 +69,51 @@ const getAllIssuesFromDB = async (query: TQuery) => {
     return issuesWithReporterInfo;
 }
 
+const getSingleIssueFromDB = async (id: string) => {
+    const issueResult = await pool.query(
+    `
+    SELECT *
+    FROM issues
+    WHERE id = $1
+    `,
+    [id]
+  );
+
+  const issue = issueResult.rows[0];
+
+  if (!issue) {
+    throw new Error("Issue not found");
+  }
+
+    const reporterResult = await pool.query(
+        `
+        SELECT id, name, role
+        FROM users
+        WHERE id = $1
+        `,
+        [issue.reporter_id]
+    );
+
+    const reporter = reporterResult.rows[0];
+
+
+    return {
+        id: issue.id,
+        title: issue.title,
+        description: issue.description,
+        type: issue.type,
+        status: issue.status,
+
+        reporter,
+
+        created_at: issue.created_at,
+        updated_at: issue.updated_at,
+    };
+
+}
+
 export const issueService = {
     createIssueIntoDB,
+    getSingleIssueFromDB,
     getAllIssuesFromDB
 }
