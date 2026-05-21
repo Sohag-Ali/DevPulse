@@ -160,9 +160,29 @@ const updateIssueInDB = async (
 
 }
 
+const deleteIssueFromDB = async (id: string, user: TUser) => {
+
+    if(user.role !== "maintainer"){
+        throw new Error("You are not authorized to delete this issue");
+    }
+
+    const result = await pool.query(
+        `
+        DELETE FROM issues
+        WHERE id = $1
+        RETURNING *
+        `,
+        [id]
+    );
+
+    return result.rows[0];
+
+}
+
 export const issueService = {
     createIssueIntoDB,
     getSingleIssueFromDB,
     getAllIssuesFromDB,
-    updateIssueInDB
+    updateIssueInDB,
+    deleteIssueFromDB
 }
