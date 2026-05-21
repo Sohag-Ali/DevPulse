@@ -1,13 +1,15 @@
 import { Pool } from "pg";
 import config from "../config";
 
+// Create Pool for connect to the database
 export const pool = new Pool({
-    connectionString: config.connectionString,
+  connectionString: config.connectionString,
 })
 
- export const initDB = async () => {
-    try {
-        await pool.query(`
+export const initDB = async () => {
+  try {
+    // users table
+    await pool.query(`
     CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     
@@ -26,7 +28,7 @@ export const pool = new Pool({
 );
       `);
 
-       // issues table
+    // issues table
     await pool.query(`
       CREATE TABLE IF NOT EXISTS issues (
 
@@ -57,8 +59,8 @@ export const pool = new Pool({
       );
     `);
 
-        console.log('Database initialized successfully');
-    } catch (error) {
-        console.log(error);
-    }
+    console.log('Database initialized successfully');
+  } catch (error) {
+    console.log(error);
+  }
 }

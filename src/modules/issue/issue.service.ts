@@ -17,15 +17,19 @@ const createIssueIntoDB = async (issueData: IIssue, reporter_id: number) => {
 
 
 const getAllIssuesFromDB = async (query: TQuery) => {
+    // Default sort is by newest
     const { sort = "newest", type, status } = query;
-
+    // Build the base query
     let baseQuery = `SELECT * FROM issues`;
 
+    //Add filtering conditions on type 
     if (type) {
         baseQuery += ` WHERE type = '${type}'`;
     }
 
+    // Add filtering conditions on status
     if (status) {
+        //type applied hole AND use korte hobe status use korte
         if (type) {
             baseQuery += ` AND status = '${status}'`;
         } else {
@@ -33,6 +37,7 @@ const getAllIssuesFromDB = async (query: TQuery) => {
         }
     }
 
+    // Add sorting condition default is by newest
     if (sort === 'oldest') {
         baseQuery += ` ORDER BY created_at ASC`;
     }
@@ -52,7 +57,9 @@ const getAllIssuesFromDB = async (query: TQuery) => {
 
     const reporters = reporterData.rows;
 
+    // Merge reporter information with issues
     const issuesWithReporterInfo = issues.map(issue => {
+        //repoter id issue reported id check
         const reporter = reporters.find(r => r.id === issue.reporter_id);
         return {
             id: issue.id,
@@ -71,14 +78,11 @@ const getAllIssuesFromDB = async (query: TQuery) => {
 }
 
 const getSingleIssueFromDB = async (id: string) => {
-    const issueResult = await pool.query(
-        `
+    const issueResult = await pool.query(`
     SELECT *
     FROM issues
     WHERE id = $1
-    `,
-        [id]
-    );
+    `,[id]);
 
     const issue = issueResult.rows[0];
 
@@ -113,18 +117,11 @@ const getSingleIssueFromDB = async (id: string) => {
 
 }
 
-const updateIssueInDB = async (
-    id: string,
-    payload: TUpdateIssue,
-    user: TUser
-) => {
+const updateIssueInDB = async ( id: string, payload: TUpdateIssue, user: TUser) => {
 
-    const existingIssueResult = await pool.query(
-        `
+    const existingIssueResult = await pool.query(`
         SELECT * FROM issues WHERE id = $1
-        `,
-        [id]
-    );
+        `,[id]);
 
     const existingIssue = existingIssueResult.rows[0];
 
@@ -144,18 +141,15 @@ const updateIssueInDB = async (
 
     const { title, description, type } = payload;
 
-    const result = await pool.query(
-        `
+    const result = await pool.query(`
         UPDATE issues
         SET title = COALESCE($1, title),
-            description = COALESCE($2, description),
-            type = COALESCE($3, type),
-            updated_at = CURRENT_TIMESTAMP
+        description = COALESCE($2, description),
+        type = COALESCE($3, type),
+        updated_at = CURRENT_TIMESTAMP
         WHERE id = $4
         RETURNING *
-        `,
-        [title, description, type, id]
-    );
+        `,[title, description, type, id]);
 
     return result.rows[0];
 
@@ -167,14 +161,11 @@ const deleteIssueFromDB = async (id: string, user: TUser) => {
         throw new AppError(403, "You are not authorized to delete this issue");
     }
 
-    const result = await pool.query(
-        `
+    const result = await pool.query(`
         DELETE FROM issues
         WHERE id = $1
         RETURNING *
-        `,
-        [id]
-    );
+        `,[id]);
 
     return result.rows[0];
 

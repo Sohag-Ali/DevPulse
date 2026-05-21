@@ -14,7 +14,6 @@ app.use(logger);
 
 const corsOptions = {
     origin: config.clientUrl,
-    
 };
 
 app.use(cors(corsOptions));
@@ -24,7 +23,5 @@ app.use('/api/auth', authRouter);
 app.use('/api/issues', issueRouter);
 
 app.use(globalErrorHandler);
- 
-
 
 export default app;

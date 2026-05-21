@@ -1,5 +1,5 @@
 class AppError extends Error {
-
+// Custom error class to include HTTP status codes
     statusCode: number;
 
     constructor(
