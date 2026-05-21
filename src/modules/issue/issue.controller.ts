@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import { pool } from "../../db";
 import { issueService } from "./issue.service";
 import { report } from "node:process";
-import type { TQuery } from "./issue.interface";
+import type { TQuery, TUser } from "./issue.interface";
 
 const createIssue = async(req: Request, res: Response) => {
 
@@ -66,10 +66,30 @@ const getSingleIssue = async(req: Request, res: Response) => {
 
 }
 
+const updateIssue = async(req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+
+        const result = await issueService.updateIssueInDB(id as string, req.body, req.user as TUser);
+        res.status(200).json({
+            success: true,
+            message: 'Issue updated successfully',
+            data: result
+        });
+    } catch (error: any) {
+        res.status(404).json({
+            success: false,
+            message: 'Issue not found',
+            data: error
+        })
+    }
+}
+
 
 
 export const issueController = {
     createIssue,
     getAllIssues,
-    getSingleIssue
+    getSingleIssue,
+    updateIssue
 }

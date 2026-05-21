@@ -1,5 +1,5 @@
 import { pool } from "../../db";
-import type { IIssue, TQuery } from "./issue.interface";
+import type { IIssue, TQuery, TUpdateIssue, TUser } from "./issue.interface";
 
 
 const createIssueIntoDB = async (issueData: IIssue, reporter_id: number) => {
@@ -71,19 +71,19 @@ const getAllIssuesFromDB = async (query: TQuery) => {
 
 const getSingleIssueFromDB = async (id: string) => {
     const issueResult = await pool.query(
-    `
+        `
     SELECT *
     FROM issues
     WHERE id = $1
     `,
-    [id]
-  );
+        [id]
+    );
 
-  const issue = issueResult.rows[0];
+    const issue = issueResult.rows[0];
 
-  if (!issue) {
-    throw new Error("Issue not found");
-  }
+    if (!issue) {
+        throw new Error("Issue not found");
+    }
 
     const reporterResult = await pool.query(
         `
@@ -112,8 +112,57 @@ const getSingleIssueFromDB = async (id: string) => {
 
 }
 
+const updateIssueInDB = async (
+    id: string,
+    payload: TUpdateIssue,
+    user: TUser
+) => {
+
+    const existingIssueResult = await pool.query(
+        `
+        SELECT * FROM issues WHERE id = $1
+        `,
+        [id]
+    );
+
+    const existingIssue = existingIssueResult.rows[0];
+
+    if (!existingIssue) {
+        throw new Error("Issue not found");
+    }
+
+    if(user.role === "contributor"){
+        if(existingIssue.reporter_id !== user.id){
+            throw new Error("You are not authorized to update this issue");
+        }
+
+        if(existingIssue.status !== "open"){
+            throw new Error("You can only update issues that are open");
+        }
+    }
+
+    const { title, description, type } = payload;
+
+    const result = await pool.query(
+        `
+        UPDATE issues
+        SET title = COALESCE($1, title),
+            description = COALESCE($2, description),
+            type = COALESCE($3, type),
+            updated_at = CURRENT_TIMESTAMP
+        WHERE id = $4
+        RETURNING *
+        `,
+        [title, description, type, id]
+    );
+
+    return result.rows[0];
+
+}
+
 export const issueService = {
     createIssueIntoDB,
     getSingleIssueFromDB,
-    getAllIssuesFromDB
+    getAllIssuesFromDB,
+    updateIssueInDB
 }
