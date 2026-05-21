@@ -2,6 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import config from "../config";
 import { pool } from "../db";
+import sendResponse from "../utils/sendResponse";
 
 const auth = () => {
     return async (req: Request, res: Response, next: NextFunction) => {
@@ -12,10 +13,11 @@ const auth = () => {
 
             // Check if the token is present
             if (!token) {
-                return res.status(401).json({
+                return sendResponse(res, {
+                    statusCode: 401,
                     success: false,
                     message: 'Unauthorized access',
-                });
+                })  
             }
 
             // Verify the token and extract user information
@@ -29,7 +31,8 @@ const auth = () => {
             const user = userData.rows[0];
 
             if (!user) {
-                return res.status(401).json({
+                return sendResponse(res, {
+                    statusCode: 401,
                     success: false,
                     message: 'Unauthorized access',
                 });
@@ -40,9 +43,11 @@ const auth = () => {
             next();
 
         } catch (error) {
-            return res.status(401).json({
+            return sendResponse(res, {
+                statusCode: 401,
                 success: false,
-                message: 'Invalid token',
+                message: 'Unauthorized access',
+                errors: error
             });
         }
 

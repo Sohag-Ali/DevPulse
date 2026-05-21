@@ -1,107 +1,113 @@
 import type { Request, Response } from "express";
-import { pool } from "../../db";
 import { issueService } from "./issue.service";
-import { report } from "node:process";
 import type { TQuery, TUser } from "./issue.interface";
+import sendResponse from "../../utils/sendResponse";
 
-const createIssue = async(req: Request, res: Response) => {
+const createIssue = async (req: Request, res: Response) => {
 
     try {
         const reporter_id = req.user?.id;
 
         const result = await issueService.createIssueIntoDB(req.body, reporter_id as number);
-        
-        res.status(201).json({
+
+        sendResponse(res, {
+            statusCode: 201,
             success: true,
             message: 'Issue created successfully',
             data: result.rows[0]
         })
     } catch (error: any) {
-        res.status(500).json({
+        sendResponse(res, {
+            statusCode: 500,
             success: false,
             message: 'Error creating issue',
-            data: error
+            errors: error
         })
     }
 }
 
-const getAllIssues = async(req: Request, res: Response) => {
+const getAllIssues = async (req: Request, res: Response) => {
     try {
-        
+
         const result = await issueService.getAllIssuesFromDB(req.query as TQuery);
-            res.status(200).json({
-                success: true,
-                // message: 'Issues fetched successfully',
-                data: result
-            })
-    } catch (error:any) {
-        res.status(500).json({
+        sendResponse(res, {
+            statusCode: 200,
+            success: true,
+            data: result
+        })
+    } catch (error: any) {
+        sendResponse(res, {
+            statusCode: 500,
             success: false,
             message: 'Error fetching issues',
-            data: error
+            errors: error
         })
     }
 }
 
-const getSingleIssue = async(req: Request, res: Response) => {
+const getSingleIssue = async (req: Request, res: Response) => {
 
     try {
-        
+
         const { id } = req.params;
 
         const result = await issueService.getSingleIssueFromDB(id as string);
 
-        res.status(200).json({
+        sendResponse(res, {
+            statusCode: 200,
             success: true,
-            message: 'Issue fetched successfully',
             data: result
         })
     } catch (error: any) {
-        res.status(404).json({
+        sendResponse(res, {
+            statusCode: 404,
             success: false,
             message: 'Issue not found',
-            data: error
+            errors: error
         })
     }
 
 }
 
-const updateIssue = async(req: Request, res: Response) => {
+const updateIssue = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
 
         const result = await issueService.updateIssueInDB(id as string, req.body, req.user as TUser);
-        res.status(200).json({
+        sendResponse(res, {
+            statusCode: 200,
             success: true,
             message: 'Issue updated successfully',
             data: result
-        });
+        })
     } catch (error: any) {
-        res.status(404).json({
+        sendResponse(res, {
+            statusCode: 403,
             success: false,
-            message: 'Issue not found',
-            data: error
+            message: 'Forbidden Acess or Issue not found',
+            errors: error
         })
     }
 }
 
 
-const deleteIssue = async(req: Request, res: Response) => {
+const deleteIssue = async (req: Request, res: Response) => {
 
     try {
-         const { id } = req.params;
+        const { id } = req.params;
 
-         const result = await issueService.deleteIssueFromDB(id as string, req.user as TUser);
-            res.status(200).json({  
-                success: true,
-                message: 'Issue deleted successfully',
-                data: result
-            });
+        const result = await issueService.deleteIssueFromDB(id as string, req.user as TUser);
+        sendResponse(res, {
+            statusCode: 200,
+            success: true,
+            message: 'Issue deleted successfully',
+        });
     } catch (error: any) {
-        res.status(404).json({
+        sendResponse(res, {
+            statusCode: 403,
             success: false,
-            message: 'Issue not found',
-            data: error
+            message: 'Forbidden Acess or Issue not found',
+            errors: error
         })
     }
 }

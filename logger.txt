@@ -56,3 +56,69 @@ Method -> POST, URL -> /api/auth/signup, Time -> 2026-05-21T10:29:51.258Z
 Method -> POST, URL -> /api/auth/signup, Time -> 2026-05-21T10:30:13.114Z
 
 Method -> POST, URL -> /api/auth/login, Time -> 2026-05-21T10:33:41.918Z
+
+Method -> POST, URL -> /api/issues, Time -> 2026-05-21T10:40:49.888Z
+
+Method -> POST, URL -> /api/issues, Time -> 2026-05-21T10:41:24.238Z
+
+Method -> POST, URL -> /api/issues, Time -> 2026-05-21T10:41:39.179Z
+
+Method -> POST, URL -> /api/issues, Time -> 2026-05-21T10:42:57.572Z
+
+Method -> POST, URL -> /api/auth/login, Time -> 2026-05-21T10:50:31.658Z
+
+Method -> POST, URL -> /api/issues, Time -> 2026-05-21T10:52:53.302Z
+
+Method -> POST, URL -> /api/issues, Time -> 2026-05-21T10:53:12.022Z
+
+Method -> POST, URL -> /api/auth/login, Time -> 2026-05-21T10:53:24.096Z
+
+Method -> POST, URL -> /api/issues, Time -> 2026-05-21T10:53:52.657Z
+
+Method -> POST, URL -> /api/issues, Time -> 2026-05-21T10:54:02.294Z
+
+Method -> GET, URL -> /api/issues, Time -> 2026-05-21T11:27:24.945Z
+
+Method -> GET, URL -> /api/issues?sort=newest, Time -> 2026-05-21T11:28:03.752Z
+
+Method -> GET, URL -> /api/issues?sort=oldest, Time -> 2026-05-21T11:28:24.862Z
+
+Method -> GET, URL -> /api/issues, Time -> 2026-05-21T11:28:47.485Z
+
+Method -> GET, URL -> /api/issues, Time -> 2026-05-21T11:28:56.843Z
+
+Method -> GET, URL -> /api/issues, Time -> 2026-05-21T11:29:03.827Z
+
+Method -> GET, URL -> /api/issues, Time -> 2026-05-21T11:33:40.806Z
+
+Method -> GET, URL -> /api/issues, Time -> 2026-05-21T11:33:46.592Z
+
+Method -> GET, URL -> /api/issues/3, Time -> 2026-05-21T11:36:36.920Z
+
+Method -> GET, URL -> /api/issues/3, Time -> 2026-05-21T11:37:02.270Z
+
+Method -> GET, URL -> /api/issues/9, Time -> 2026-05-21T11:37:24.282Z
+
+Method -> POST, URL -> /api/auth/login, Time -> 2026-05-21T11:41:28.064Z
+
+Method -> PATCH, URL -> /api/issues/2, Time -> 2026-05-21T11:43:32.204Z
+
+Method -> POST, URL -> /api/auth/login, Time -> 2026-05-21T11:44:12.117Z
+
+Method -> PATCH, URL -> /api/issues/2, Time -> 2026-05-21T11:45:04.310Z
+
+Method -> PATCH, URL -> /api/issues/7, Time -> 2026-05-21T11:45:35.485Z
+
+Method -> PATCH, URL -> /api/issues/7, Time -> 2026-05-21T11:46:53.013Z
+
+Method -> PATCH, URL -> /api/issues/30, Time -> 2026-05-21T11:47:02.748Z
+
+Method -> DELETE, URL -> /api/issues/5, Time -> 2026-05-21T11:49:51.082Z
+
+Method -> DELETE, URL -> /api/issues/5, Time -> 2026-05-21T11:50:13.167Z
+
+Method -> DELETE, URL -> /api/issues/3, Time -> 2026-05-21T11:50:27.648Z
+
+Method -> POST, URL -> /api/auth/login, Time -> 2026-05-21T11:50:43.537Z
+
+Method -> DELETE, URL -> /api/issues/3, Time -> 2026-05-21T11:51:01.307Z

@@ -16,7 +16,7 @@ const createIssueIntoDB = async (issueData: IIssue, reporter_id: number) => {
 
 
 const getAllIssuesFromDB = async (query: TQuery) => {
-    const { sort, type, status } = query;
+    const { sort = "newest", type, status } = query;
 
     let baseQuery = `SELECT * FROM issues`;
 
@@ -32,11 +32,11 @@ const getAllIssuesFromDB = async (query: TQuery) => {
         }
     }
 
-    if (sort === 'newest') {
-        baseQuery += ` ORDER BY created_at DESC`;
+    if (sort === 'oldest') {
+        baseQuery += ` ORDER BY created_at ASC`;
     }
     else {
-        baseQuery += ` ORDER BY created_at ASC`;
+        baseQuery += ` ORDER BY created_at DESC`;
     }
 
     const result = await pool.query(baseQuery);
