@@ -1,6 +1,8 @@
 import type { Request, Response } from "express";
 import { pool } from "../../db";
 import { issueService } from "./issue.service";
+import { report } from "node:process";
+import type { TQuery } from "./issue.interface";
 
 const createIssue = async(req: Request, res: Response) => {
 
@@ -23,6 +25,25 @@ const createIssue = async(req: Request, res: Response) => {
     }
 }
 
+const getAllIssues = async(req: Request, res: Response) => {
+    try {
+        
+        const result = await issueService.getAllIssuesFromDB(req.query as TQuery);
+            res.status(200).json({
+                success: true,
+                // message: 'Issues fetched successfully',
+                data: result
+            })
+    } catch (error:any) {
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching issues',
+            data: error
+        })
+    }
+}
+
 export const issueController = {
-    createIssue
+    createIssue,
+    getAllIssues
 }

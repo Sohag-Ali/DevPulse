@@ -1,5 +1,5 @@
 import { pool } from "../../db";
-import type { IIssue } from "./issue.interface";
+import type { IIssue, TQuery } from "./issue.interface";
 
 
 const createIssueIntoDB = async (issueData: IIssue, reporter_id: number) => {
@@ -14,6 +14,62 @@ const createIssueIntoDB = async (issueData: IIssue, reporter_id: number) => {
     return result;
 }
 
+
+const getAllIssuesFromDB = async (query: TQuery) => {
+    const { sort, type, status } = query;
+
+    let baseQuery = `SELECT * FROM issues`;
+
+    if (type) {
+        baseQuery += ` WHERE type = '${type}'`;
+    }
+
+    if (status) {
+        if (type) {
+            baseQuery += ` AND status = '${status}'`;
+        } else {
+            baseQuery += ` WHERE status = '${status}'`;
+        }
+    }
+
+    if (sort === 'newest') {
+        baseQuery += ` ORDER BY created_at DESC`;
+    }
+    else {
+        baseQuery += ` ORDER BY created_at ASC`;
+    }
+
+    const result = await pool.query(baseQuery);
+
+    const issues = result.rows;
+
+    const reporterIds = issues.map(issue => issue.reporter_id);
+
+    const reporterData = await pool.query(`
+        SELECT id, name, role FROM users WHERE id = ANY($1)
+    `, [reporterIds]);
+
+    const reporters = reporterData.rows;
+
+    const issuesWithReporterInfo = issues.map(issue => {
+        const reporter = reporters.find(r => r.id === issue.reporter_id);
+        return {
+            id: issue.id,
+            title: issue.title,
+            description: issue.description,
+            type: issue.type,
+            status: issue.status,
+
+            reporter,
+
+            created_at: issue.created_at,
+            updated_at: issue.updated_at,
+        }
+    });
+    return issuesWithReporterInfo;
+}
+
 export const issueService = {
-    createIssueIntoDB
+    createIssueIntoDB,
+    getAllIssuesFromDB
 }
