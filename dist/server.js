@@ -485,6 +485,9 @@ var corsOptions = {
 app.use(cors(corsOptions));
 app.use("/api/auth", authRouter);
 app.use("/api/issues", issueRouter);
+app.get("/", (req, res) => {
+  res.send("Server is running successfully ");
+});
 app.use(globalErrorHandler_default);
 var app_default = app;
 
